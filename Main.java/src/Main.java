@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import br.com.dio.UserModel;
 import br.com.dio.dao.UserDAO;
+import br.com.dio.dao.UserNotFoundException;
+import br.com.dio.exception.EmpyStorageException;
 import br.com.dio.model.MenuOption;
 
 public class Main {
@@ -29,18 +31,35 @@ public class Main {
                     System.out.printf("Usuário cadastrado %s", user);
                 }
                 case UPDATE ->{
-                   var user = dao.update(requestToUpdate());
-                    System.out.printf("Usuário atualizado %s", user);
+                 try {
+                    var user = dao.update(requestToUpdate());
+                    System.out.printf("Usuário atualizado %s", user);  
+                }catch(UserNotFoundException | EmpyStorageException ex){
+                      System.out.println(ex.getMessage());
+                } finally{
+                      System.out.println("===================");
                 }
+                }
+
                 case DELETE -> {
+                  try{  
                     dao.delete(requestId());
                     System.out.printf("Usuário excluído");
-                }
+                   }catch(UserNotFoundException | EmpyStorageException ex){
+                      System.out.println(ex.getMessage());
+                    } finally{
+                      System.out.println("===================");
+                    }
+                  }
                 case FIND_BY_ID ->{
+                  try{
                 var id = requestId();
                 var user = dao.findById(id);
                 System.out.printf("Usuário com id %s:",id);
                 System.out.println(user);
+                  }catch(UserNotFoundException | EmpyStorageException ex){
+                    System.out.println(ex.getMessage());
+                  }
             }
                 case FIND_ALL -> {
                     var users = dao.findAll();

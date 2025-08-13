@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dio.UserModel;
+import br.com.dio.exception.EmpyStorageException;
 
 public class UserDAO {
 
@@ -40,6 +41,7 @@ public class UserDAO {
 
 
     public UserModel findById(final long id){
+        verifyStorage();
         var message = String.format("Não existe usuário com o id %s cadasrrado", id);
        return models.stream()
         .filter(u -> u.getId() == id)
@@ -49,10 +51,20 @@ public class UserDAO {
 
 
     public List<UserModel> findAll(){
-        return models;
+        List<UserModel> result;
+        try{
+            verifyStorage();
+            result = models;
+        } catch(EmpyStorageException ex){
+            ex.printStackTrace();
+            result = new ArrayList<>();
+        } 
+        return result;
     } 
 
 
-
+    private void verifyStorage(){
+        if (models.isEmpty()) throw new EmpyStorageException("Está vázio!!!");
+    }
 
 }
