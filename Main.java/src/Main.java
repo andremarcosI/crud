@@ -1,12 +1,11 @@
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 import br.com.dio.UserModel;
 import br.com.dio.dao.UserDAO;
 import br.com.dio.dao.UserNotFoundException;
-import br.com.dio.exception.EmpyStorageException;
+import br.com.dio.exception.EmptyStorageException;
 import br.com.dio.model.MenuOption;
 
 public class Main {
@@ -34,7 +33,7 @@ public class Main {
                  try {
                     var user = dao.update(requestToUpdate());
                     System.out.printf("Usuário atualizado %s", user);  
-                }catch(UserNotFoundException | EmpyStorageException ex){
+                }catch(UserNotFoundException | EmptyStorageException ex){
                       System.out.println(ex.getMessage());
                 } finally{
                       System.out.println("===================");
@@ -45,7 +44,7 @@ public class Main {
                   try{  
                     dao.delete(requestId());
                     System.out.printf("Usuário excluído");
-                   }catch(UserNotFoundException | EmpyStorageException ex){
+                   }catch(UserNotFoundException | EmptyStorageException ex){
                       System.out.println(ex.getMessage());
                     } finally{
                       System.out.println("===================");
@@ -57,7 +56,7 @@ public class Main {
                 var user = dao.findById(id);
                 System.out.printf("Usuário com id %s:",id);
                 System.out.println(user);
-                  }catch(UserNotFoundException | EmpyStorageException ex){
+                  }catch(UserNotFoundException | EmptyStorageException ex){
                     System.out.println(ex.getMessage());
                   }
             }

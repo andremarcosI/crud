@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.dio.UserModel;
-import br.com.dio.exception.EmpyStorageException;
+import br.com.dio.exception.EmptyStorageException;
 
 public class UserDAO {
 
@@ -55,7 +55,7 @@ public class UserDAO {
         try{
             verifyStorage();
             result = models;
-        } catch(EmpyStorageException ex){
+        } catch(EmptyStorageException ex){
             ex.printStackTrace();
             result = new ArrayList<>();
         } 
@@ -64,7 +64,7 @@ public class UserDAO {
 
 
     private void verifyStorage(){
-        if (models.isEmpty()) throw new EmpyStorageException("Está vázio!!!");
+        if (models.isEmpty()) throw new EmptyStorageException("Está vázio!!!");
     }
 
 }
